@@ -4,19 +4,28 @@ require 'async_rack_test/resync_app'
 
 # Adds aget, apost, etc. which treat an asynchronous rack-app as synchronous.
 module AsyncRackTest
+  class Timeout < StandardError; end
+
   module Methods
     include Rack::Test::Methods
 
+    # The original app
+    def async_app
+      @async_app ||= app
+    end
     def sync_app
-      self.class.instance_eval { alias_method :async_app, :app } unless self.respond_to?(:async_app)
-      ResyncApp.new(async_app)
+      @sync_app ||= begin
+        ResyncApp.new(async_app)
+      end
     end
 
     def use_sync
-      self.instance_eval { alias :app :sync_app }
+      async_app # Ensure we have cached the original app first.
+      self.instance_eval { class << self; self; end }.class_eval { alias :app :sync_app }
     end
     def use_async
-      self.instance_eval { alias :app :async_app }
+      async_app # Ensure we have cached the original app first.
+      self.instance_eval { class << self; self; end }.class_eval { alias :app :async_app }
     end
 
     %w(get put post delete head options).each do |m|

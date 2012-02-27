@@ -3,8 +3,13 @@
 module AsyncRackTest
   class ResyncApp
     attr_reader :app
-    def initialize(app)
+
+    # app => The async app that this is meant to wrap.
+    # opts
+    #   :timeout => Number of seconds before giving up on the async app.
+    def initialize(app, opts={})
       @app = app
+      @timeout = opts[:timeout] || 5
     end
 
     def call(env)
@@ -19,6 +24,9 @@ module AsyncRackTest
               EM.stop
             end
           end
+          EM.add_timer(@timeout) do
+            raise Timeout, "Did not receive a response from the app within 5 seconds--app: #{app.inspect}"
+          end
         else
           result = response
           EM.stop
@@ -26,6 +34,8 @@ module AsyncRackTest
       end
       result
     end
+
+    private
 
     def write_async_response(response)
       @async_response = response
