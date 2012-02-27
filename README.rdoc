@@ -33,9 +33,24 @@ A quick example:
 
 TODO
 
+MAYBE: look into rack-test giving us a simple hook to add middleware
+* ultimately AsyncRackTest just inserts ResyncApp as middleware
+* maybe I can just do something like "use ResyncApp" rather than using my weird wrapper with aliases
+Update gemspec file to include all the dependencies (development, test, and otherwise)
+
+
 == INSTALL:
 
 TODO
+
+
+== RUNNING THE SPECS:
+
+If you want to run the tests for this gem, note that the included .rspec file
+excludes the slow tests by default. To run the slow tests, use something like:
+
+  be rspec spec --tag slow
+
 
 == LICENSE:
 
