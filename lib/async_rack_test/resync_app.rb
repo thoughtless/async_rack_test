@@ -25,7 +25,7 @@ module AsyncRackTest
             end
           end
           EM.add_timer(@timeout) do
-            raise Timeout, "Did not receive a response from the app within 5 seconds--app: #{app.inspect}"
+            raise Timeout, "Did not receive a response from the app within #{@timeout} seconds--app: #{app.inspect}"
           end
         else
           result = response
