@@ -101,6 +101,28 @@ describe AsyncRackTest do
         @result.should == [200, {}, []]
       end
 
+      it "should return when the passed in app throws :async", :slow => true do
+        @trigger_async = nil
+        async_app = Proc.new do |env|
+          EM.add_periodic_timer(0.01) do
+            if @trigger_async # This lets us control when the async behavior actually happens.
+              env['async.callback'].call [200, {}, []]
+            end
+          end
+          throw :async
+        end
+        resync_app = AsyncRackTest::ResyncApp.new(async_app)
+
+        @result = nil
+        thread = Thread.new { @result = resync_app.call({}) }
+
+        sleep 1 # Give some time to guarantee the thread has had time to run.
+        @result.should be_nil
+        @trigger_async = true
+        thread.join
+        @result.should == [200, {}, []]
+      end
+
       it "should return instantly when the passed in app is not async", :slow => true do
         @trigger_async = nil
         async_app = Proc.new do |env|
