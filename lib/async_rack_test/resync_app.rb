@@ -16,8 +16,8 @@ module AsyncRackTest
       result = nil
       env['async.callback'] = method(:write_async_response)
       EM.run do
-        response = app.call(env)
-        if response[0] == -1
+        response = catch(:async) { app.call(env) }
+        if response.nil? || response[0] == -1
           EM.add_periodic_timer(0.1) do
             unless @async_response.nil?
               result = @async_response
