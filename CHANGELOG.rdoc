@@ -1,3 +1,11 @@
+=== 0.0.3 / 2013-09-30
+
+* Add support for libs that `throw :async`. Thanks to https://github.com/paviensky
+
+=== 0.0.2 / 2012-02-27
+
+* Add configurable timeout
+
 === 0.0.1 / 2012-02-23
 
 * Initial commit, copied from:
