@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/thoughtless/async_rack_test"
   s.summary     = "async_rack_test-#{AsyncRackTest::Version::STRING}"
   s.description = "Extends rack-test to make working with EventMachine easier."
+  s.license = 'MIT'
 
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {spec,features}/*`.split("\n")
