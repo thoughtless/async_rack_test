@@ -28,7 +28,7 @@ module AsyncRackTest
       self.instance_eval { class << self; self; end }.class_eval { alias :app :async_app }
     end
 
-    %w(get put post delete head options).each do |m|
+    %w(get post put patch delete head options).each do |m|
       eval <<-RUBY, binding, __FILE__, __LINE__ + 1
       def a#{m}(*args)
         use_sync
