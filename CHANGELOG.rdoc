@@ -1,3 +1,7 @@
+=== 0.0.5 / 2014-04-16
+
+* Add support for PATCH requests. Thanks to https://github.com/ali-graham
+
 === 0.0.3 / 2013-09-30
 
 * Add support for libs that `throw :async`. Thanks to https://github.com/paviensky
