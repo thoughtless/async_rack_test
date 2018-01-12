@@ -47,6 +47,11 @@ excludes the slow tests by default. To run the slow tests, use something like:
   be rspec spec --tag slow
 
 
+  # With docker
+  docker-compose build
+  docker-compose run test
+  docker-compose run test bundle exec rspec spec --tag slow
+
 == TODO:
 
 MAYBE: look into rack-test giving us a simple hook to add middleware
