@@ -1,3 +1,8 @@
+=== 0.0.6 / 2018-01-12
+
+* Update dev dependencies for security.
+* Allow running tests within Docker.
+
 === 0.0.5 / 2014-04-16
 
 * Add support for PATCH requests. Thanks to https://github.com/ali-graham
